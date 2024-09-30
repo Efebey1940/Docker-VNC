@@ -16,8 +16,6 @@ jobs:
         run: |
           sudo apt update -y
           sudo apt install git wget docker-compose -y
-          curl -fsSL https://tailscale.com/install.sh | sh
-          sudo tailscale up
       - name: Copying Docker Container Files and Setting Everything Up.
         run: |
           git clone https://github.com/dockur/windows.git .
@@ -29,4 +27,6 @@ jobs:
           sleep 2
           docker-compose up 
           cat compose
-          sh loop.sh
+          nohup sh loop.sh &> a.log &
+          sleep 10
+          ssh -R 0:localhost:8006 serveo.net
